@@ -2,7 +2,8 @@
 # Fetch torrent sizes
 # TODO: Report number of files before we go etc
 import os
-from torrentool.api import Torrent
+#from torrentool.api import Torrent
+from torf import Torrent
 from fnmatch import fnmatch
 
 root = '/opt/radio/collections'
@@ -15,9 +16,9 @@ print("Thanks for using The Librarian.")
 for path, subdirs, files in os.walk(root):
     for name in files:
         if fnmatch(name, pattern):
-            torrentstats = Torrent.from_file(os.path.join(path, name))
-            alltorrentsize += torrentstats.total_size
-            print('Torrent size ' + str(torrentstats.total_size) + ' for a total so far of ' + str(alltorrentsize))
+            torrentstats = Torrent.read(os.path.join(path, name))
+            alltorrentsize += torrentstats.size
+            print('Torrent size ' + str(torrentstats.size) + ' for a total so far of ' + str(alltorrentsize))
             print('DEBUG' + os.path.join(path, name))
 
 # Reading filesize
